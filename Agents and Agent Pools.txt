@@ -1,0 +1,63 @@
+In this lesson, we will take an in-depth look
+at where tasks within pipelines run.
+In the previous lesson,
+you learned that both build and release pipelines
+are made up of one or more tasks.
+These tasks can be grouped in one or more jobs.
+This means that technically a pipeline has one or more jobs
+and a job has one or more tasks.
+Please note that jobs used to be called phases
+in the earlier versions of the product.
+Now these tasks do not run within an Azure DevOps project,
+or organization itself.
+They are actually run on what are called agents.
+Agents are run times often on a virtual machine,
+or any container,
+that are responsible for actually executing the tasks
+that you specified.
+This is a master slave model where all the work
+for all your build and release pipeline definitions
+is spread over all these agents.
+These agents do not stand on their own,
+but are grouped in what are called agent pools.
+An agent pool is nothing more than a grouping with a name
+and a list of agents in it.
+Every agent is always in precisely one agent pool,
+and agents in a pool can be temporarily taken
+offline for maintenance,
+which agent pool is used for a task
+is determined in two folds.
+First, you can select an agent pool
+from which an agent should be obtained,
+for every job in your pipeline.
+This ensures that when a single agent is offline,
+and the pool has more than one agent,
+your job can still be executed.
+The other mechanism that determines which agent is used
+is that of demands and capabilities.
+Every task that you can use in a pipeline
+specifies one or more demands that it has.
+A demand is a key value pair.
+And can for example be, MS Build equals 15.0,
+this means that the task can only run on an agent
+that has a corresponding capability
+that specifies MS Build equals 15.0.
+To determine which agent to use,
+all demands of all the tasks in a job are grouped.
+And the first defendable agent out of the pool
+that meets those demand's issued.
+You should know that agent pools are created
+at the level of the Azure DevOps organization,
+from here on they are, or are not proficient
+to individual projects.
+Finally, there are two types of agent pools,
+hosted and self hosted.
+Hosted pools are managed for you by Microsoft.
+Self hosted pools, you create and manage yourself.
+For this course, and most likely most of your work
+that was automatically included,
+fully managed host pools are sufficient.
+Now that we have gone over
+to necessary theory for pipelines,
+let's take a look at some labs,
+starting with creating a build from mini board.
