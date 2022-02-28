@@ -26,12 +26,13 @@ steps:
     Contents: '**/*.war'
     TargetFolder: '$(build.artifactstagingdirectory)'
   displayName: "Copy war file to Pipeline staging directory"
-# - task: PublishBuildArtifacts@1
-#   inputs:
-#     PathtoPublish: '$(build.artifactstagingdirectory)'
-#     ArtifactName: 'BgeneratedArt'
-#     publishLocation: 'FilePath'
-#     TargetPath: 'opt'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'myArtifact'
+    publishLocation: 'Container'
+
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
@@ -45,5 +46,10 @@ steps:
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)'
-    artifact: 'Agents and Agent Pools.txt'
+    artifact: 'myArtifact'
     publishLocation: 'pipeline'
+- task: DownloadPipelineArtifact@2
+  inputs:
+    buildType: 'current'
+    artifactName: 'myArtifact'
+    targetPath: '$(Pipeline.Workspace)'
