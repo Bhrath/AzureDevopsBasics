@@ -25,12 +25,13 @@ steps:
   inputs:
     Contents: '**/*.war'
     TargetFolder: '$(build.artifactstagingdirectory)'
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
-    ArtifactName: 'BgeneratedArt'
-    publishLocation: 'FilePath'
-    TargetPath: 'opt'
+  displayName: "Copy war file to Pipeline staging directory"
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     PathtoPublish: '$(build.artifactstagingdirectory)'
+#     ArtifactName: 'BgeneratedArt'
+#     publishLocation: 'FilePath'
+#     TargetPath: 'opt'
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
@@ -39,3 +40,4 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
     verbose: true
+  displayName: "archive the files generated"
