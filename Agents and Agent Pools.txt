@@ -60,4 +60,6 @@ fully managed host pools are sufficient.
 Now that we have gone over
 to necessary theory for pipelines,
 let's take a look at some labs,
-starting with creating a build from mini board.
+starting with creating a build from mini board.
+
+
