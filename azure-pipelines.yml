@@ -43,11 +43,12 @@ steps:
     verbose: true
   displayName: "archive the files generated"
 
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Pipeline.Workspace)'
-    artifact: 'myArtifact'
-    publishLocation: 'pipeline'
+# - task: PublishPipelineArtifact@1
+#   inputs:
+#     targetPath: '$(Pipeline.Workspace)'
+#     artifact: 'myArtifact'
+#     publishLocation: 'pipeline'
+    
 - task: DownloadPipelineArtifact@2
   inputs:
     buildType: 'current'
