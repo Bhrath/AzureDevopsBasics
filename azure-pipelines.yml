@@ -29,7 +29,8 @@ steps:
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
     ArtifactName: 'BgeneratedArt'
-    publishLocation: 'Container'
+    publishLocation: 'FilePath'
+    TargetPath: 'opt'
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
