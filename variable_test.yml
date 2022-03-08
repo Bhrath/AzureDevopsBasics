@@ -1,0 +1,87 @@
+# File: azure-pipelines.yml
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+- name: globalVariable
+  value: "This is rooot level variable"
+- name: overrideGlobalVariable
+  value: "ROOT"
+- name: overrideGlobalandStageVariable
+  value: "Global"
+- name: myNode
+  value: JS01_from_root
+stages:
+  - stage:
+    displayName: "stage1"
+    variables:
+      stageVariable: "This is stage1 level variable"
+      overrideGlobalVariable: "STAGE 1"
+      overrideGlobalandStageVariable: "Stage 1"
+      # myNode: JS01_from_StagE
+    jobs:
+    - job: "BuildAndTest"
+      variables:
+      - name: jobVariable
+        value: "This is job level variable in stage1"
+      - name: sameNameVariable
+        value: "This Overrides pipeline variable"
+      - name: overrideGlobalandStageVariable
+        value: "job"
+      # - name: myNode
+      #   value: JS01_from_job
+      
+      workspace:
+        clean: all
+      steps:
+       - script: |
+          echo Jumpserver value is $(MYNODE)
+         displayName: 'JumpServerValue'
+       - task: Bash@3
+         inputs:
+           targetType: 'inline'
+           script: |
+             #write our commands here
+             echo "value of samEnameVraible : " ${{ variables.sameNameVariable }}
+             echo "print value from UI sameNameVariable " $(sameNameVaraible)
+             echo "globalVariable :" $(globalVariable)
+             echo "stageVariable :" $(stageVariable)
+             echo "jobVariable :"  $(jobVariable)
+             echo "overrideGlobalVariable in Stage :"  $(overrideGlobalVariable)
+             echo "overrideGlobalandStageVariable in Job :"  $(overrideGlobalandStageVariable)
+             echo "PipelineVariable: " $(sameNameVariable)
+       - script: |
+          echo printing value from script func $(SAMENAMEVARAIBLE)
+         displayName: 'SCRIPTYYY'
+        
+  - stage:
+    displayName: "stage2"
+    variables:
+      stageVariable: "This is stage2 level variable"
+      overrideGlobalVariable: "STAGE 2"
+      overideGlobalandStageVariable: "Stage 2"
+    jobs:
+    - job: "BuildAndTest"
+      variables:
+      - name: jobVariable
+        value: "This is job level variable in stage2"
+      - name: overrideGlobalandStageVariable
+        value: "Stage2 -job"
+      
+      workspace:
+        clean: all
+      steps:
+       - task: Bash@3
+         inputs:
+           targetType: 'inline'
+           script: |
+             echo  ${{ variables.samenameVariable }}
+             echo "globalVariable :" $(globalVariable)
+             echo "stageVariable :" $(stageVariable)
+             echo "jobVariable :" $(jobVariable)
+             echo "overrideGlobalVariable in Stage :"  $(overrideGlobalVariable)
+             echo "overrideGlobalandStageVariable in Job :"  $(overrideGlobalandStageVariable)
+             echo "PipelineVariable :" $(sameNameVariable)
