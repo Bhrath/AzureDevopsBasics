@@ -17,7 +17,7 @@ parameters:
 
 
 steps:
-- task: Maven@2
+- task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
@@ -46,15 +46,15 @@ steps:
     targetType: 'inline'
     script: echo executor here is${EXECUTOR}
   displayName: Print the var value
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-    verbose: true
-  displayName: "archive the files generated"
+# - task: ArchiveFiles@2
+#   inputs:
+#     rootFolderOrFile: '$(Build.BinariesDirectory)'
+#     includeRootFolder: true
+#     archiveType: 'zip'
+#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#     replaceExistingArchive: true
+#     verbose: true
+#   displayName: "archive the files generated"
 
 - task: PublishPipelineArtifact@1
   inputs:
